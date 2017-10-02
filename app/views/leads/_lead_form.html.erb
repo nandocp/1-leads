@@ -1,0 +1,15 @@
+<%= form_for Lead.new do |f| %>
+	<%= f.label :primeiro_nome %>
+	<%= f.text_field :primeiro_nome %>
+
+	<%= f.label :ultimo_nome %>
+	<%= f.text_field :ultimo_nome %>
+
+	<%= f.label :email_pessoal %>
+	<%= f.email_field :email_pessoal, class: "email_selecionado" %>
+
+	<%= f.label :email_corp %>
+	<%= f.email_field :email_corp, class: "email_selecionado" %>
+
+  <%= submit_tag("Baixar o e-book") %>
+<% end %>
