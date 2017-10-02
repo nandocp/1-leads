@@ -15,16 +15,16 @@ class PostsController < ApplicationController
 	
 	def update
 		@post = Post.find(params[:id])
-		if @post.update_attributes(post_params)
-			flash[:success] = "! Post atualizado !"
-			redirect_to @post
-		else
-			render 'edit'
-		end
+		@post.update(post_params)
+		flash.notice = "! Post '#{@post.title}' atualizado !"
+		redirect_to post_path(@post)
 	end
 
 	def show
 		@post = Post.find(params[:id])
+
+		@comentario = Comentario.new
+		@comentario.post_id = @post.id
 	end
 
 	def index
@@ -32,8 +32,9 @@ class PostsController < ApplicationController
 	end
 
 	def destroy
-		Post.find(params[:id]).destroy
-		flash[:success] = "! Post deletado !"
+		@post = Post.find(params[:id])
+		@post.destroy
+		flash.notice = "! Post '#{@post.titulo}' Post deletado !"
 		redirect_to root_url
 	end
 

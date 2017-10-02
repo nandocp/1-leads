@@ -1,0 +1,9 @@
+<%= form_for([@post, @post.comentarios.build]) do |f| %>
+    <%= f.label :comentador, 'Seu nome' %>
+    <%= f.text_field :comentador %>
+
+    <%= f.label :comentario, 'Seu comentário' %>
+    <%= f.text_field :comentario %>
+
+    <%= f.button %>
+<% end %>

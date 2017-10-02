@@ -1,0 +1,6 @@
+<% @post.comentarios.each do |c| %>
+	<h4>Nome</h4>
+	<%= c.comentador %>
+	<h4>Comentário</h4>
+	<%= c.comentario %>
+<% end %>

@@ -5,4 +5,15 @@
     <div class="post_corpo">
         <%= @post.corpo %>
     </div>
+    <p>
+        Tags:
+        <% @post.tags.each do |tag| %>
+            <%= link_to tag.nome, tag_path(tag) %>
+        <% end %>
+    </p>
+    <%= link_to "<< voltar para lista de posts", posts_path %>
+    
+    <%= render :partial => "comentarios/comentario_form" %>
+    <h3>Comentários</h3>
+    <%= render 'comentarios/comentario', collection: @post.comentarios %>
 </article>

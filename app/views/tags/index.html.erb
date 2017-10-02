@@ -1,0 +1,8 @@
+<h3>Lista das tags do blog</h3>
+<ul id="tags">
+	<% @tags.each do |tag| %>
+		<li class="cada_tag">
+			<%= link_to tag, tag_path(tag) %>
+		</li>
+	<% end %>
+</ul>
