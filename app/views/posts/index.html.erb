@@ -1,1 +1,14 @@
 <h1>TESTE</h1>
+
+<% @posts.each do |post| %>
+	<article>
+        <div class="post_titulo">
+		    <%= post.titulo %>
+        </div>
+        <div class="post_corpo">
+            <%= post.corpo %>
+        </div>
+	</article>
+<% end %>
+
+<%= will_paginate @posts %>
