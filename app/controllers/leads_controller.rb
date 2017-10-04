@@ -1,23 +1,19 @@
 class LeadsController < ApplicationController
-	def new
-		@lead = Lead.new
-	end
-
 	def create
 		@lead = Lead.new(user_params)
-  	if @lead.save
-  		flash[:success] = "Obrigado!"
-  	else
-  		flash[:error] = "Algo não funcionou" # MUDAR!
-  	end
-  end
+		@lead.save
+		redirect_to obrigado_path
+	end
+
+	def report
+		@leads = Lead.all
+	end
 
 	private
 	  def user_params
 	  	params.require(:lead).permit(:primeiro_nome,
-	  															 :ultimo_nome,
-	  															 :email_pessoal,
-	  															 :email_corp,
-	  															 :ipv_4)
+																 	 :ultimo_nome,
+																 	 :email,
+																	 :tipo)
 	  end
 end

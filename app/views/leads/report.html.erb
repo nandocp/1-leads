@@ -1,0 +1,34 @@
+<div>
+	<table>
+		<thead>
+			<tr>
+				<th>email</th>
+				<th>nome</th>
+				<th>ip</th>
+				<th>tipo</th>
+				<th>hora_data</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @leads.each do |l| %>
+				<tr>
+					<td>
+						<%= l.email %>
+					</td>
+					<td>
+						<%= "#{l.primeiro_nome} #{l.ultimo_nome}" %>
+					</td>
+					<td>
+						<%= l.ip %>
+					</td>
+					<td>
+						<%= l.tipo %>
+					</td>
+					<td>
+						<%= l.created_at.localtime.strftime("%F %T") %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171002113227) do
+ActiveRecord::Schema.define(version: 20171004170222) do
 
   create_table "comentarios", force: :cascade do |t|
     t.string "comentador"
@@ -22,15 +22,14 @@ ActiveRecord::Schema.define(version: 20171002113227) do
   end
 
   create_table "leads", force: :cascade do |t|
-    t.string "ipv_4"
+    t.string "ip"
     t.string "primeiro_nome"
     t.string "ultimo_nome"
-    t.string "email_pessoal"
-    t.string "email_corp"
+    t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email_corp"], name: "index_leads_on_email_corp", unique: true
-    t.index ["email_pessoal"], name: "index_leads_on_email_pessoal", unique: true
+    t.string "tipo", default: "b2c"
+    t.index ["email"], name: "index_leads_on_email", unique: true
   end
 
   create_table "posts", force: :cascade do |t|

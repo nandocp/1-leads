@@ -16,7 +16,7 @@ class PostsController < ApplicationController
 	def update
 		@post = Post.find(params[:id])
 		@post.update(post_params)
-		flash.notice = "! Post '#{@post.title}' atualizado !"
+		flash.notice = "! Post '#{@post.titulo}' atualizado !"
 		redirect_to post_path(@post)
 	end
 
@@ -25,10 +25,13 @@ class PostsController < ApplicationController
 
 		@comentario = Comentario.new
 		@comentario.post_id = @post.id
+
+		@lead = Lead.new
 	end
 
 	def index
-		@posts = Post.paginate(page: params[:page])
+		@posts = Post.all.order('created_at DESC')
+		@lead = Lead.new
 	end
 
 	def destroy

@@ -1,12 +1,10 @@
 <%= form_for @post do |t| %>
-    <%= t.label :titulo %>
-    <%= t.text_field :titulo %>
+  <%= t.label :titulo %>
+  <%= t.text_field :titulo %>
 
-    <%= t.label :corpo %>
-    <%= t.text_field :corpo %>
+  <%= t.label :corpo %>
+  <%= t.text_field :corpo %>
 
-    <%= t.submit %>
-    <% if current_page?(controller: 'posts', action: 'edit') %>
-        <%= button_to "Apagar", @post, method: :delete, data: { confirm: "? Tem certeza ?" } %>
-    <% end %>
+  <%= t.submit %>
+  
 <% end %>

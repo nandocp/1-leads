@@ -1,15 +1,25 @@
-<%= form_for Lead.new do |f| %>
-	<%= f.label :primeiro_nome %>
-	<%= f.text_field :primeiro_nome %>
+<%= form_for @lead, :html => {:class => 'form-light'} do |f| %>
+  <h4 class="text-center mb-4">Baixe nosso e-book gratuito sobre cash back!</h4>
 
-	<%= f.label :ultimo_nome %>
-	<%= f.text_field :ultimo_nome %>
+	<div class="md-form">
+    <i class="fa fa-user prefix grey-text"></i>
+		<%= f.text_field :primeiro_nome, class: 'form-control', placeholder: 'Nome' %>
+	</div>
 
-	<%= f.label :email_pessoal %>
-	<%= f.email_field :email_pessoal, class: "email_selecionado" %>
+	<div class="md-form">
+    <i class="fa fa-user prefix grey-text"></i>
+		<%= f.text_field :ultimo_nome, class: 'form-control', placeholder: 'Sobrenome' %>
+	</div>
 
-	<%= f.label :email_corp %>
-	<%= f.email_field :email_corp, class: "email_selecionado" %>
+	<div class="md-form">
+    <i class="fa fa-envelope prefix grey-text"></i>
+		<%= f.email_field :email, class: 'form-control', placeholder: 'E-mail' %>
+	</div>
+
+	<div class="form-group">
+		<%= f.check_box :tipo %>
+		<%= f.label :tipo, "E-mail corporativo (seu-nome@sua-empresa.com)" %>
+	</div>
 
   <%= submit_tag("Baixar o e-book") %>
 <% end %>

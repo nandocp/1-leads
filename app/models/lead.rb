@@ -1,26 +1,31 @@
 class Lead < ApplicationRecord
-	require 'ipaddr'
+  require 'ipaddr'
+  require 'socket'
+
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   VALID_NAME_REGEX = /\A([^\d\W]|[-])*\Z/ # ^[\\p{L} .'-]+$
 
 	# callbacks
-	before_save :correcao_primeiro_nome
-  before_save :correcao_ultimo_nome
+  before_validation :ipv4_set
+	before_validation :primeiro_nome_correto
+  before_validation :ultimo_nome_correto
+        before_save :b2b_b2c
 
-	# validações
+	# validações || REFATORAR
 	validates :primeiro_nome, presence: { message: "! Digite seu nome !" },
                               format: { with: VALID_NAME_REGEX }
 	validates :ultimo_nome, presence: { message: "! Digite seu nome !" },
                             format: { with: VALID_NAME_REGEX }
-	validates :email_pessoal, length: { maximum: 255 },
-      										  format: { with: VALID_EMAIL_REGEX }
-  validates :email_corp, length: { maximum: 255 },
-                         format: { with: VALID_EMAIL_REGEX }
-  # validates :ipv_4, presence: true
-
-  private
+	validates :email, presence: { message: "! Digite um e-mail válido !" },
+                      length: { maximum: 255 },
+                			format: { with: VALID_EMAIL_REGEX }
   	# métodos de validação e callback
-  	def correcao_primeiro_nome
+    def ipv4_set
+      a = Socket.ip_address_list.detect{ |i|i.ipv4_private? }
+      self.ip = a.ip_address
+    end
+
+  	def primeiro_nome_correto
       nome = self.primeiro_nome.split
       c = 0
       a = []
@@ -29,9 +34,9 @@ class Lead < ApplicationRecord
         c += 1
       end
       self.primeiro_nome = a.join(" ")
-  	end
+    end
 
-    def correcao_ultimo_nome
+  	def ultimo_nome_correto
       nome = self.ultimo_nome.split
       c = 0
       a = []
@@ -41,8 +46,12 @@ class Lead < ApplicationRecord
       end
       self.ultimo_nome = a.join(" ")
     end
-
-  	#def ipv4_valido
-  	#	if self.ipv_4.ipv4? != true
-  	#end
+    
+    def b2b_b2c
+      if self.tipo == "1"
+        self.tipo = "B2B"
+      elsif self.tipo == "0"
+        self.tipo = "B2C"
+      end
+    end
 end
