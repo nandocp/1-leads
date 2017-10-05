@@ -1,6 +1,4 @@
 class Lead < ApplicationRecord
-  require 'ipaddr'
-  require 'socket'
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   VALID_NAME_REGEX = /\A([^\d\W]|[-])*\Z/ # ^[\\p{L} .'-]+$
@@ -46,12 +44,31 @@ class Lead < ApplicationRecord
       end
       self.ultimo_nome = a.join(" ")
     end
+
+    def nome
+      "#{primeiro_nome} #{ultimo_nome}"
+    end
     
     def b2b_b2c
       if self.tipo == "1"
         self.tipo = "B2B"
       elsif self.tipo == "0"
         self.tipo = "B2C"
+      end
+    end
+
+    def hora_data
+      created_at.localtime.strftime("%F %T")
+    end
+
+    def self.to_csv
+      atributos = %w{ email nome ip tipo hora_data }
+      CSV.generate( headers: true ) do |csv|
+        csv << atributos
+
+        all.each do |lead|
+          csv << atributos.map{ |a| lead.send(a) }
+        end
       end
     end
 end
